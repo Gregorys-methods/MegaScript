@@ -1,7 +1,7 @@
 @echo off
 
 REM Specify the local version in the batch script
-set "localVersion=0.0"
+set "localVersion=0.1.2"
 
 REM Fetch latest release information from GitHub API
 for /f "tokens=2 delims=:," %%G in ('powershell -command "& { Invoke-RestMethod -Uri 'https://api.github.com/repos/Gregorys-methods/MegaScript/releases/latest' }" ^| findstr /C:"name"') do set "latestVersion=%%~G"
@@ -22,20 +22,21 @@ if "%latestVersion%" GTR "%localVersion%" (
     REM Change the download location to the renamed folder
     cd old
     REM Download the latest release archive from GitHub
-    powershell -command "& { Invoke-WebRequest -Uri 'https://github.com/Gregorys-methods/MegaScript/releases/latest/download/MegaScript-main.zip' -OutFile 'update.zip' }"
+    powershell -command "& { Invoke-WebRequest -Uri 'https://github.com/Gregorys-methods/MegaScript/releases/latest/download/MegaScript-main.zip' -OutFile 'MegaScript-main.zip' }"
 
     REM Extract the downloaded archive
-    if exist "update.zip" (
-        echo Extracting update...
-        powershell -command "& { Expand-Archive -Path '.\update.zip' -DestinationPath '.\' }"
-        del /q update.zip
+if exist "MegaScript-main.zip" (
+    echo Extracting update...
+    powershell -command "& { Expand-Archive -Path '.\MegaScript-main.zip' -DestinationPath '.\' -Force }"
+    del /q MegaScript-main.zip
 
-        REM Run the updatefinish.bat script after extraction
-        cd MegaScript-main\Scripts\Update
-        call updatefinish.bat
-    ) else (
-        echo Update download failed.
-    )
+    REM Run the updatefinish.bat script after extraction
+    cd MegaScript-main\Scripts\Update
+    call updatefinish.bat
+) else (
+    echo Update download failed.
+)
+
 
     REM Go back to the original directory
     popd
