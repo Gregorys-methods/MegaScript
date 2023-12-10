@@ -16,7 +16,7 @@ echo [5] ^> More coming Soon?
 echo.
 
 REM Take user input
-set /p choice="Enter the number of what you want to run or press 'U' to run a custom batch file: "
+set /p choice="Enter the number of what you want to run: "
 
 REM Execute the selected batch file (adjust the path accordingly)
 if /I "%choice%"=="1" (
