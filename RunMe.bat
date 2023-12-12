@@ -12,7 +12,7 @@ echo [1] ^> Run All Scripts
 echo [2] ^> Spotify
 echo [3] ^> Wemod Pro 
 echo [4] ^> WinRar Activation
-echo [5] ^> More coming Soon?
+echo [5] ^> Windows Activation
 echo.
 
 REM Take user input
@@ -30,7 +30,7 @@ if /I "%choice%"=="1" (
 ) else if /I "%choice%"=="5" (
     echo Coming Soon!
 ) else if /I "%choice%"=="U" (
-    start cmd /k "Scripts\Update\Update.bat""
+    start cmd /k "Scripts\Windows\win.bat""
 ) else (
     echo Invalid choice. Please select a valid option.
 )

@@ -1,7 +1,7 @@
 @echo off
 
 REM Specify the local version in the batch script
-set "localVersion=0.1.2"
+set "localVersion=0.1.3"
 
 REM Fetch latest release information from GitHub API
 for /f "tokens=2 delims=:," %%G in ('powershell -command "& { Invoke-RestMethod -Uri 'https://api.github.com/repos/Gregorys-methods/MegaScript/releases/latest' }" ^| findstr /C:"name"') do set "latestVersion=%%~G"
