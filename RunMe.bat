@@ -28,9 +28,9 @@ if /I "%choice%"=="1" (
 ) else if /I "%choice%"=="4" (
     start cmd /k "Scripts\Winrar\Winrar.bat"
 ) else if /I "%choice%"=="5" (
-    echo Coming Soon!
-) else if /I "%choice%"=="U" (
     start cmd /k "Scripts\Windows\win.bat""
+) else if /I "%choice%"=="U" (
+    start cmd /k "Scripts\Update\Update.bat""
 ) else (
     echo Invalid choice. Please select a valid option.
 )
