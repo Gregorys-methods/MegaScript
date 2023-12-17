@@ -1,41 +1,83 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-REM Function to center text
-set "title=Gregory's Methods"
-echo %title%
+REM Set the base path for scripts
+set "scriptPath=Scripts"
 
-REM Display options with user-defined text
-echo [U] ^> Check For Updates
+:MainMenu
+cls
+
+REM Display the title
+echo          Gregory's Methods          
+echo ----------------------------------------------
+
+REM Define menu options
+set "options[0]=Exit"
+set "options[A]=Run All Scripts"
+set "options[U]=Check For Updates"
+set "options[1]=Spotify"
+set "options[2]=Wemod Pro"
+set "options[3]=WinRar Activation"
+set "options[4]=Windows Activation"
+REM Add more options as needed here.
+
+set "options[H]=Help"
+
+REM Display options
+echo [U] ^> !options[U]!
+echo [A] ^> !options[A]!
 echo.
-echo [1] ^> Run All Scripts
-echo [2] ^> Spotify
-echo [3] ^> Wemod Pro 
-echo [4] ^> WinRar Activation
-echo [5] ^> Windows Activation
+echo Script Operations:
+for /L %%i in (1,1,10) do (  REM Change 10 to the number of scripts you have
+    if defined options[%%i] echo [%%i] ^> !options[%%i]!
+)
+echo.
+echo System Options:
+echo [H] ^> !options[H]!
+echo [0] ^> !options[0]!
 echo.
 
-REM Take user input
-set /p choice="Enter the number of what you want to run: "
+:Input
+set /p choice="Enter your choices separated by commas (e.g., 1,3,4) or A for all: "
+if "%choice%"=="0" exit
 
-REM Execute the selected batch file (adjust the path accordingly)
-if /I "%choice%"=="1" (
-    start cmd /k "Scripts\AI1.bat"
-) else if /I "%choice%"=="2" (
-    start cmd /k "Scripts\Spotify\Spotx.bat"
-) else if /I "%choice%"=="3" (
-    start cmd /k "Scripts\Wemod\wemoddownload.bat"
-) else if /I "%choice%"=="4" (
-    start cmd /k "Scripts\Winrar\Winrar.bat"
-) else if /I "%choice%"=="5" (
-    start cmd /k "Scripts\Windows\win.bat""
-) else if /I "%choice%"=="U" (
-    start cmd /k "Scripts\Update\Update.bat""
-) else (
-    echo Invalid choice. Please select a valid option.
+REM Check for 'Run All' option
+if /I "%choice%"=="A" set "choice=1,2,3,4"  REM Add all script numbers here
+
+REM Remove spaces from input and append a comma at the end
+set "choice=%choice: =%"
+set "input=%choice%,"
+:Loop
+for /f "tokens=1* delims=," %%a in ("!input!") do (
+    set "num=%%a"
+    set "input=%%b"
+    if "!num!"=="" goto MainMenu
+
+    REM Check if the script exists for the selected number
+    if not defined options[!num!] (
+        echo Invalid choice: !num!
+        if not "!input!"=="" goto Loop
+        pause
+        goto MainMenu
+    )
+
+    REM Execute the selected script
+    echo Executing: !options[!num!]!
+    call :ExecuteScript !num!
+    if not "!input!"=="" goto Loop
 )
 
-REM Footer
 echo.
 echo Made by Gregory's Methods
 pause
+goto MainMenu
+
+:ExecuteScript
+if "%~1"=="U" start cmd /k "%scriptPath%\Update\Update.bat"
+if "%~1"=="1" start cmd /k "%scriptPath%\Spotify\Spotx.bat"
+if "%~1"=="2" start cmd /k "%scriptPath%\Wemod\wemoddownload.bat"
+if "%~1"=="3" start cmd /k "%scriptPath%\Winrar\Winrar.bat"
+if "%~1"=="4" start cmd /k "%scriptPath%\Windows\win.bat"
+REM Add more if conditions for each script number
+REM Example: if "%~1"=="5" start cmd /k "%scriptPath%\YourScript5.bat"
+goto :eof
