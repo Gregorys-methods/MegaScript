@@ -23,8 +23,13 @@ if exist "%ProgramFiles%\WinRAR\WinRAR.exe" (
 
     echo WinRAR has been downloaded and installed.
 )
-REM Stop the WeMod process
-        taskkill /F /IM Winrar.exe
+
+        rem Start WinRAR
+start "" "%ProgramFiles%\WinRAR\WinRAR.exe"
+
+REM Stop the WinRAR process
+taskkill /F /IM WinRAR.exe
+
 rem Define the path to the WinRAR directory in AppData\Roaming
 set "winrar_dir=%APPDATA%\WinRAR"
 
