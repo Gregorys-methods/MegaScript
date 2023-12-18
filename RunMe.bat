@@ -4,11 +4,15 @@ setlocal EnableDelayedExpansion
 REM Set the base path for scripts
 set "scriptPath=Scripts"
 
+REM Read the version number from Update.bat
+for /f "tokens=2 delims==" %%a in ('findstr "localVersion=" "%scriptPath%\Update\Update.bat"') do set "version=%%a"
+
 :MainMenu
 cls
 
-REM Display the title and menu
+REM Display the title and version
 echo          Gregory's Methods          
+echo          Version: !version!
 echo ----------------------------------------------
 echo [U] ^> Check For Updates
 echo [A] ^> Run All Scripts
